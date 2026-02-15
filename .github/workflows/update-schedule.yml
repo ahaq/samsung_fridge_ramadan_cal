@@ -2,7 +2,7 @@ name: Update Ramadan Schedule
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # 8:00 AM UTC = 1:00 AM Pacific
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 permissions:
@@ -25,18 +25,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install Python dependencies
-        run: pip install Pillow pdf2image requests
+        run: pip install Pillow pdf2image
 
       - name: Generate updated schedule
         run: python3 update_schedule.py
-
-      - name: Upload to Google Photos
-        env:
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-          GOOGLE_PHOTOS_ALBUM_ID: ${{ secrets.GOOGLE_PHOTOS_ALBUM_ID }}
-        run: python3 upload_to_google_photos.py
 
       - name: Commit and push updated image
         run: |
